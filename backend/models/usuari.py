@@ -12,4 +12,6 @@ class Usuari(Base):
   rol = Column(Enum("Viajero", "Creador", "Admin", name="rol_enum"), nullable=False)
   bio = Column(String(200))
 
-  viatge = relationship("Participants", back_populates="Usuari")
+  viatges = relationship("Participants", back_populates="Usuari")
+  peticions = relationship("Peticions", back_populates="Usuari")
+  misatge = relationship("Misatge", back_populates="Usuari")
