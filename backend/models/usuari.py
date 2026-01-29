@@ -8,7 +8,7 @@ class Usuari(Base):
   id = Column(Integer, primary_key=True, index=True)
   email = Column(String(120), unique=True, index=True, nullable=False)
   hashed_pasword = Column(String(200), unique=True, nullable=False)
-  fullNameColumn = Column(String(50), nullable=False)
+  fullName = Column(String(50), nullable=False)
   rol = Column(Enum("Viajero", "Creador", "Admin", name="rol_enum"), nullable=False)
   bio = Column(String(200))
 
