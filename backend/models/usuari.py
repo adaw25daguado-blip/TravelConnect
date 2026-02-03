@@ -13,5 +13,4 @@ class Usuari(Base):
   bio = Column(String(200))
 
   viatges = relationship("Participants", back_populates="Usuari")
-  peticions = relationship("Peticions", back_populates="Usuari")
   misatge = relationship("Misatge", back_populates="Usuari")

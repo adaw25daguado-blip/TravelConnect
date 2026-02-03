@@ -10,4 +10,5 @@ class PeticioPromocio(Base):
   misatge_peticio = Column(String(200), unique=True, nullable=False)
   estat = Column(Enum("Pendent", "Aprovat", "Rebutjat"), nullable = False)
 
-  usuari = relationship("Usuari", back_populates="usuariSolicitant")
+  usuari = relationship("Usuari", back_populates="viatge")
+  viatge = relationship("Viatge", back_populates="usuari")
