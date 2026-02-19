@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from db.database import Base
 
 class PeticioPromocio(Base):
-  __tablename__ = "peticioPromocio"
+  __tablename__ = "peticio_promocio"
 
   id = Column(Integer, primary_key=True, index=True)
   usuari_solicitant = Column(Integer, ForeignKey("usuaris.id"), primary_key=True)
@@ -11,4 +11,3 @@ class PeticioPromocio(Base):
   estat = Column(Enum("Pendent", "Aprovat", "Rebutjat"), nullable = False)
 
   usuari = relationship("Usuari", back_populates="viatge")
-  viatge = relationship("Viatge", back_populates="usuari")

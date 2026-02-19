@@ -51,7 +51,7 @@ class UsuariViatgeResponse(UsuariResponse):
     from_attributes = True
 
 class UsuariPeticioResponse(UsuariResponse):
-  peticio: Optional["PeticioResponse"] = None
+  peticio: Optional["PeticioPromocioResponse"] = None
 
   class Config: 
     from_attributes = True
@@ -84,13 +84,13 @@ class ViatgeMisatgeResponse(ViatgeResponse):
 
 
 
-class PeticioResponse(PeticioPromocioSchema):
+class PeticioPromocioResponse(PeticioPromocioSchema):
   id: int
   
   class Config:
     from_attributes = True
 
-class PeticioUsuariResponse(PeticioResponse):
+class PeticioUsuariResponse(PeticioPromocioResponse):
   usuari: Optional["UsuariResponse"] = None
 
   class Config: 

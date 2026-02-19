@@ -11,10 +11,13 @@ def get_usuari(db: Session, usuari_id: int):
 def get_usuari_viatges(db: Session, usuari_id: int):
    return db.query(Usuari).options(joinedload(Usuari.viatges)).filter(Usuari.id == usuari_id).all()
 
-def get_usuari_misatges(db: Session):
-  return db.query(Usuari).options(joinedload(Usuari.misatge)).all()
+def get_usuaris_viatges(db:Session):
+  return db.query(Usuari).options(joinedload(Usuari.viatges)).all()
 
-def create_usuari (db: Session, usuari: UsuariSchema):
+def get_usuari_misatges(db: Session, usuari_id: int):
+  return db.query(Usuari).options(joinedload(Usuari.misatge)).filter(Usuari.id == usuari_id).all()
+
+def create_usuari(db: Session, usuari: UsuariSchema):
   db_usuari = Usuari(email = usuari.email, hashed_pswd = usuari.hashed_pasword, full_name = usuari.fullName, rol = usuari.rol, bio = usuari.bio)
   db.add(db_usuari)
   db.commit()

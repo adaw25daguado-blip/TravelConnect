@@ -5,6 +5,8 @@ from db.database import Base
 from datetime import datetime, timezone
 
 class MisatgeXat(Base): 
+  __tablename__ = "misatge_xat"
+
   id = Column(Integer, primary_key=True, index=True)
   viatge = Column(Integer, ForeignKey("viatges.id"), primary_key=True)
   autor = Column(Integer, ForeignKey("usuaris.id"), primary_key=True)
