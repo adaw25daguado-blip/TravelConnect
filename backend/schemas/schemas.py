@@ -1,6 +1,6 @@
 from typing import List, Optional
 from pydantic import BaseModel
-from sqlalchemy import Date
+from datetime  import date
 
 # ------------------ Input ------------------
 class UsuariSchema(BaseModel):
@@ -13,8 +13,8 @@ class UsuariSchema(BaseModel):
 class ViatgeSchema(BaseModel):
   nombre: str
   destino: str
-  fecha_inicio: Date
-  fecha_fin: Date
+  fecha_inicio: date
+  fecha_fin: date
   descripcion: str
   creador: Optional[str]
   maximo_participantes: int
@@ -24,7 +24,7 @@ class ViatgeSchema(BaseModel):
 class ParticipantsSchemas(BaseModel):
   usuari_id: Optional[int]
   viatge_id: Optional[int]
-  fecha_inscripcion: Date
+  fecha_inscripcion: date
 
 class PeticioPromocioSchema(BaseModel):
   usuari_solicitant: Optional[int]
@@ -35,7 +35,7 @@ class MisatgeXatSchema(BaseModel):
   viatge: Optional[int]
   autor: Optional[int]
   contingut: str
-  timesTamp: Date
+  timesTamp: date
 
 # ------------------ Output ------------------
 
@@ -71,16 +71,33 @@ class ViatgeResponse(ViatgeSchema):
     from_attributes = True
   
 class ViatgeUsuariResponse(ViatgeResponse):
-  usuari: List["UsuariResponse"] = []
+  usuaris: List["UsuariResponse"] = []
 
   class Config:
     from_attributes = True
 
 class ViatgeMisatgeResponse(ViatgeResponse):
-  misatge: List["MisatgeXatResponse"] = []
+  misatges: List["MisatgeXatResponse"] = []
 
   class Config:
     from_attributes = True
+
+
+
+class participantsResponse(ParticipantsSchemas):
+  id: int
+
+  class Config:
+    from_attributes = True
+
+class participantsUsuariResponse(participantsResponse):
+  usuari: List["UsuariResponse"] = []
+
+  class Config:
+    from_attributes = True
+
+class participantsViatgeResponse(participantsResponse):
+  viatge: List["ViatgeResponse"] = []
 
 
 
@@ -120,14 +137,14 @@ class MisatgeUsuariResponse(MisatgeXatResponse):
 # ------------------ Output Anidado ------------------
 
 class InscripcionUsuari(BaseModel):
-  fecha_inscripcion: Date
+  fecha_inscripcion: date
   usuari: UsuariResponse
 
   class Config:
     from_attributes = True
 
 class InscripcionViatge(BaseModel):
-  fecha_inscripcion: Date
+  fecha_inscripcion: date
   viatge: ViatgeResponse
 
   class Config:

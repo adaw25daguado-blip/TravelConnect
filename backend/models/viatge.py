@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Enum, Date, ForeignKey
 from sqlalchemy.orm import relationship
-from db.database import Base
+from backend.db.database import Base
 
 class Viatge(Base):
   __tablename__ = "viatges"
@@ -16,8 +16,8 @@ class Viatge(Base):
   total_particiantes = Column(Integer, nullable = False)
   estado = Column(Enum("Planificando", "Activo", "Completado", "Cancelado"), nullable=False)
 
-  creador = relationship("Usuari", back_populates="viatges_creats")
-  usuaris = relationship("Participants", back_populates="Viatge")
-
+  creador = relationship("Usuari", back_populates="viatges_creats") 
+  participants = relationship("Participants", back_populates="viatge") 
+  comentaris = relationship("MisatgeXat", back_populates="viatge")
 
   

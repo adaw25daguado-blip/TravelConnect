@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Enum, ForeignKey
 from sqlalchemy.orm import relationship
-from db.database import Base
+from backend.db.database import Base
 
 class PeticioPromocio(Base):
   __tablename__ = "peticio_promocio"
@@ -10,4 +10,4 @@ class PeticioPromocio(Base):
   misatge_peticio = Column(String(200), unique=True, nullable=False)
   estat = Column(Enum("Pendent", "Aprovat", "Rebutjat"), nullable = False)
 
-  usuari = relationship("Usuari", back_populates="viatge")
+  usuari = relationship("Usuari", back_populates="peticions_promocio")

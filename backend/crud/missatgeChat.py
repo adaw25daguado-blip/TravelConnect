@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session, joinedload
-from models.misatgeXat import MisatgeXat
-from schemas.schemas import MisatgeXatResponse, MisatgeXatSchema
+from backend.models.misatgeXat import MisatgeXat
+from backend.schemas.schemas import MisatgeXatResponse, MisatgeXatSchema
 
 def get_misatgesXats(db: Session):
   return db.query(MisatgeXat).all()

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session, joinedload
-from models.peticioPromocio import PeticioPromocio
-from schemas.schemas import PeticioPromocioResponse, PeticioPromocioSchema
+from backend.models.peticioPromocio import PeticioPromocio
+from backend.schemas.schemas import PeticioPromocioResponse, PeticioPromocioSchema
 
 def get_peticionsPromocions(db: Session):
   return db.query(PeticioPromocio).all()

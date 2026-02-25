@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session, joinedload
-from models.usuari import Usuari
-from schemas.schemas import UsuariResponse, UsuariSchema
+from backend.models.usuari import Usuari
+from backend.schemas.schemas import UsuariResponse, UsuariSchema
 
 def get_usuaris(db: Session):
   return db.query(Usuari).all()

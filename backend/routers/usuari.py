@@ -1,9 +1,9 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from crud.usuari import create_usuari, get_usuari, delete_usuari, get_usuari_misatges, get_usuaris_viatges,get_usuari_viatges, get_usuaris, update_usuari
-from schemas.schemas import UsuariSchema, UsuariResponse, UsuariViatgeResponse, UsuariPeticioResponse, UsuariMisatgeResponse
-from db.deps import get_db
+from backend.crud.usuari import create_usuari, get_usuari, delete_usuari, get_usuari_misatges, get_usuaris_viatges,get_usuari_viatges, get_usuaris, update_usuari
+from backend.schemas.schemas import UsuariSchema, UsuariResponse, UsuariViatgeResponse, UsuariPeticioResponse, UsuariMisatgeResponse
+from backend.db.deps import get_db
 
 router = APIRouter(prefix="/usuaris", tags=["usuaris"])
 

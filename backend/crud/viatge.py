@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session, joinedload
-from models.viatge import Viatge
-from schemas.schemas import ViatgeResponse, ViatgeSchema
+from backend.models.viatge import Viatge
+from backend.schemas.schemas import ViatgeResponse, ViatgeSchema
 
 def get_viatges(db: Session):
   return db.query(Viatge).all()
