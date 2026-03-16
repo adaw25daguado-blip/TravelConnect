@@ -6,7 +6,7 @@ class PeticioPromocio(Base):
   __tablename__ = "peticio_promocio"
 
   id = Column(Integer, primary_key=True, index=True)
-  usuari_solicitant = Column(Integer, ForeignKey("usuaris.id"), primary_key=True)
+  usuari_solicitant = Column(Integer, ForeignKey("usuaris.id"),nullable=False)
   misatge_peticio = Column(String(200), unique=True, nullable=False)
   estat = Column(Enum("Pendent", "Aprovat", "Rebutjat"), nullable = False)
 

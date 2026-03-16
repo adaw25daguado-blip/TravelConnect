@@ -11,13 +11,13 @@ class Viatge(Base):
   fecha_inicio = Column(Date, nullable=False)
   fecha_fin = Column(Date, nullable=False)
   descripcion = Column(String (200), nullable=False)
-  creador = Column(Integer, ForeignKey("usuaris.id"), nullable = False)
+  creador_id = Column(Integer, ForeignKey("usuaris.id"), nullable = False)
   maximo_participantes = Column(Integer, nullable = False)
-  total_particiantes = Column(Integer, nullable = False)
+  total_participantes = Column(Integer, nullable = False)
   estado = Column(Enum("Planificando", "Activo", "Completado", "Cancelado"), nullable=False)
 
-  creador = relationship("Usuari", back_populates="viatges_creats") 
-  participants = relationship("Participants", back_populates="viatge") 
+  usuaris = relationship("Participants", back_populates="viatge") 
+  creador = relationship("Usuari", back_populates="viatges_creats")   
   comentaris = relationship("MisatgeXat", back_populates="viatge")
 
   

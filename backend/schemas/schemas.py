@@ -1,11 +1,11 @@
 from typing import List, Optional
 from pydantic import BaseModel
-from datetime  import date
+from datetime  import date, datetime
 
 # ------------------ Input ------------------
 class UsuariSchema(BaseModel):
   email: str
-  hashed_pasword: str
+  hashed_password: str
   fullName: str
   rol: str
   bio: str
@@ -16,7 +16,7 @@ class ViatgeSchema(BaseModel):
   fecha_inicio: date
   fecha_fin: date
   descripcion: str
-  creador: Optional[str]
+  creador_id: int
   maximo_participantes: int
   total_participantes: int
   estado: str
@@ -32,72 +32,52 @@ class PeticioPromocioSchema(BaseModel):
   estat: str
 
 class MisatgeXatSchema(BaseModel):
-  viatge: Optional[int]
-  autor: Optional[int]
+  viatge_id: Optional[int]
+  autor_id: Optional[int]
   contingut: str
-  timesTamp: date
+  timestamp: datetime
 
 # ------------------ Output ------------------
 
+  class Config:
+    from_attributes = True
+
 class UsuariResponse(UsuariSchema):
   id: int
+  email: str  
+  fullName: str
+  rol: str
+  bio: str
   class Config:
     from_attributes = True
 
-class UsuariViatgeResponse(UsuariResponse):
-  viatges: List["ViatgeResponse"] = []
-
+class UsuariViewResponse(BaseModel):
+  id: int
+  email: str  
+  fullName: str
+  rol: str
+  bio: str
   class Config:
     from_attributes = True
-
-class UsuariPeticioResponse(UsuariResponse):
-  peticio: Optional["PeticioPromocioResponse"] = None
-
-  class Config: 
-    from_attributes = True
-
-class UsuariMisatgeResponse(UsuariResponse):
-  misatge: List["MisatgeXatResponse"] = []
-
-  class Config:
-    from_attributes = True
-
-
 
 class ViatgeResponse(ViatgeSchema):
-  id: int
-  
+  id: int 
+    
   class Config: 
     from_attributes = True
-  
-class ViatgeUsuariResponse(ViatgeResponse):
-  usuaris: List["UsuariResponse"] = []
 
-  class Config:
-    from_attributes = True
-
-class ViatgeMisatgeResponse(ViatgeResponse):
-  misatges: List["MisatgeXatResponse"] = []
-
-  class Config:
-    from_attributes = True
-
-
-
-class participantsResponse(ParticipantsSchemas):
+class ParticipantsResponse(ParticipantsSchemas):
   id: int
 
   class Config:
     from_attributes = True
 
-class participantsUsuariResponse(participantsResponse):
-  usuari: List["UsuariResponse"] = []
-
-  class Config:
+class MisatgeXatResponse(MisatgeXatSchema):
+  id: int 
+  
+  class Confog:
     from_attributes = True
 
-class participantsViatgeResponse(participantsResponse):
-  viatge: List["ViatgeResponse"] = []
 
 
 
@@ -107,34 +87,21 @@ class PeticioPromocioResponse(PeticioPromocioSchema):
   class Config:
     from_attributes = True
 
-class PeticioUsuariResponse(PeticioPromocioResponse):
-  usuari: Optional["UsuariResponse"] = None
-
-  class Config: 
-    from_attributes = True
-
-
-
-class MisatgeXatResponse(MisatgeXatSchema):
-  id: int 
-
-  class Confog:
-    from_attributes = True
-
-class MisatgeViatgeResponse(MisatgeXatResponse):
-  viatge: Optional["ViatgeResponse"] = None
-
-  class Config:
-    from_attributes = True
-
-class MisatgeUsuariResponse(MisatgeXatResponse):
-  usuari: Optional["ViatgeResponse"] = None
-
-  class Config:
-    from_attributes = True
-
-
 # ------------------ Output Anidado ------------------
+
+class inscripcionUsuari(BaseModel):
+  fecha_inscripcion: date
+  usuari: UsuariResponse
+
+  class Config:
+    from_attributes = True
+
+class inscripcionViatge(BaseModel):
+  fecha_inscripcion: date
+  viatge: ViatgeResponse
+
+
+
 
 class InscripcionUsuari(BaseModel):
   fecha_inscripcion: date
@@ -150,14 +117,90 @@ class InscripcionViatge(BaseModel):
   class Config:
     from_attributes = True
 
-class UsuariViatgeResponse(UsuariResponse):
-  viatge: Optional[InscripcionViatge] = None
+
+    
+
+class UsuariViatgeResponse(BaseModel):
+  id: int
+  nombre: str
+  destino: str
+  fecha_inicio: date
+  fecha_fin: date
+  descripcion: str
+  creador_id: int
+  maximo_participantes: int
+  total_participantes: int
+  estado: str
 
   class Config:
     from_attributes = True
 
-class ViatgeUsuariResponse(ViatgeResponse):
-  usuari: List[InscripcionUsuari] = []
+class UsuariPeticioResponse(PeticioPromocioResponse):
+  peticio: Optional["PeticioPromocioResponse"] = None
+
+  class Config: 
+    from_attributes = True
+  
+
+
+
+class ViatgeUsuariResponse(BaseModel):
+  email: str 
+  fullName: str
+  rol: str
+  bio: str
+    
+  class Config:
+    from_attributes = True
+
+class ViatgeMisatgeResponse(BaseModel):
+  id: int
+  viatge_id: Optional[int]
+  autor_id: Optional[int]
+  contingut: str
+  timestamp: datetime
 
   class Config:
     from_attributes = True
+
+
+
+
+class PeticioUsuariResponse(UsuariResponse):
+  usuari: Optional["UsuariResponse"] = None
+
+  class Config: 
+    from_attributes = True
+
+
+
+
+class MisatgeViatgeResponse(BaseModel):
+    id: int
+    contingut: str
+    viatge_id: int
+    autor_id: int
+    timestamp: datetime
+    viatge: Optional[ViatgeResponse] = None
+
+    class Config:
+        from_attributes = True
+
+
+class MisatgeUsuariResponse(UsuariResponse):
+  usuari: Optional["ViatgeResponse"] = None
+
+  class Config:
+    from_attributes = True
+
+#Frontend
+
+class LoginSchema(BaseModel):
+  email: str
+  password: str
+
+class RegisterSchema(BaseModel):
+  email: str
+  password: str
+  fullName: str
+  bio: Optional[str] = None

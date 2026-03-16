@@ -12,7 +12,7 @@ router = APIRouter(prefix="/peticio_promocio", tags=["peticio_promocio"])
 def read_peticions(db: Session = Depends(get_db)):
   return get_peticionsPromocions(db)
 
-#Mostrar las peticiones por id
+#Mostrar peticion por id
 @router.get("/{id_peticio}", response_model=PeticioPromocioResponse)
 def read_peticio(peticio_id: int, db: Session = Depends(get_db)):
   db_peticio = get_peticioPromocio(db, peticio_id)
@@ -20,9 +20,9 @@ def read_peticio(peticio_id: int, db: Session = Depends(get_db)):
     raise HTTPException(status_code=404, detail="Peticio promocio not found")
   return db_peticio
 
-#Crear una peicion
+#Crear una peticion
 @router.post("/", response_model=PeticioPromocioResponse)
-def create_peticioPromocio(peticio: PeticioPromocioSchema, db: Session = Depends(get_db)):
+def create_new_peticioPromocio(peticio: PeticioPromocioSchema, db: Session = Depends(get_db)):
   return create_peticioPromocio(db, peticio)
 
 #Actualizar una peticion

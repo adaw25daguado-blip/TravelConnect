@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Travel Connect</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="img/logo.png">
+</head>
+
+<body class="bg-light">
+
+  <!-- LOGIN -->
+  <div id="loginPage">
+
+    <h1 class="text-center mt-3">Travel Connect</h1>
+
+    <img src="img/logo.png" class="mx-auto d-block" alt="Globo con avión" width="150">
+
+    <div class="container vh-50 d-flex justify-content-center align-items-center">
+
+      <div class="card p-4 shadow" style="width:350px">
+
+        <h3 class="text-center mb-4">Login</h3>
+
+        <form id="loginForm">
+
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="text" class="form-control" id="username">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password">
+          </div>
+
+          <button class="botonLoging btn btn-primary w-100">Entrar</button>
+
+          <button type="button" class="btn btn-outline-secondary w-100 mt-2" onclick="mostrarRegistro()">
+            Registrarse
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!--REGISTRO DE USUARIOS-->
+
+  <div id="registerPage" style="display:none">
+
+    <h1 class="text-center mt-3">Travel Connect</h1>
+
+    <img src="img/logo.png" class="mx-auto d-block" width="150">
+
+    <div class="container vh-50 d-flex justify-content-center align-items-center">
+
+      <div class="card p-4 shadow" style="width:350px">
+
+        <h3 class="text-center mb-4">Crear cuenta</h3>
+
+        <form id="registerForm">
+
+          <div class="mb-3">
+            <label class="form-label">Nombre Completo</label>
+            <input type="text" class="form-control" id="name">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" id="email">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="registerPassword">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Bio</label>
+            <input type="bio" class="form-control" id="bio">
+          </div>
+
+          <button class="btn btn-success w-100">Registrarse</button>
+
+          <button type="button" class="btn btn-outline-secondary w-100 mt-2" onclick="mostrarLogin()">
+            Volver al login
+          </button>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- APP -->
+  <div id="appPage" style="display:none">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container-fluid">
+
+        <span class="navbar-brand">Panel</span>
+
+        <button class="btn btn-outline-light" id="logoutBtn">
+          Logout
+        </button>
+
+      </div>
+    </nav>
+
+    <div class="container mt-4">
+
+      <!-- PANEL ADMIN -->
+      <div id="adminPanel" class="d-none">
+        <h2>Panel Administrador</h2>
+
+        <div class="card p-3 mt-3" onclick="mostrarPantalla('pantallaPerfil')">Mi perfil</div>
+        <div class="card p-3 mt-3" onclick="mostrarPantalla('pantallaUsuarios')">Gestión de usuarios</div>
+        <div class="card p-3 mt-3" onclick="mostrarPantalla('pantallaViajes')">Gestión de Viajes</div>
+        <div class="card p-3 mt-3" onclick="mostrarPantalla('pantallaPeticions')">Peticiones de Promociones</div>
+      </div>
+
+      <!-- PANEL CREADOR -->
+      <div id="creadorPanel" class="d-none">
+        <h2>Panel Creador</h2>
+
+        <div class="card p-3 mt-3" onclick="mostrarPantalla('pantallaPerfil')">Mi perfil</div>
+        <div class="card p-3 mt-3" onclick="mostrarPantalla('pantallaViajes')">Gestión de Viajes</div>
+        <div class="card p-3 mt-3" onclick="mostrarPantalla('pantallaViajesDisponibles')">Viajes Disponibles</div>
+        <div class="card p-3 mt-3" onclick="mostrarPantalla('pantallaMisViajes')">Mis Viajes</div>
+        <div class="card p-3 mt-3" onclick="mostrarPantalla('pantallaPeticionPromocion')">Peticions Promocions</div>
+      </div>
+
+      <!-- PANEL VIAJERO -->
+      <div id="viajeroPanel" class="d-none">
+        <h2>Panel Viajero</h2>
+
+        <div class="card p-3 mt-3" onclick="mostrarPantalla('pantallaPerfil')">Mi perfil</div>
+        <div class="card p-3 mt-3" onclick="mostrarPantalla('pantallaViajesDisponibles')">Viajes Disponibles</div>
+        <div class="card p-3 mt-3" onclick="mostrarPantalla('pantallaMisViajes')">Mis Viajes</div>
+        <div class="card p-3 mt-3" onclick="mostrarPantalla('pantallaPeticionPromocion')">Peticions Promocions</div>
+      </div>
+
+      <!-- PANTALLAS INTERNAS -->
+      <div id="pantallaPerfil" class="d-none mt-4">
+        <h3>Mi Perfil</h3>
+        <form id="perfilForm" class="mt-3 p-3 border rounded bg-white">
+
+          <h4>Todos los campos son requeridos para actualizar el usuario</h4>
+
+          <div class="mb-3">
+            <label class="form-label">Nombre completo</label>
+            <input type="text" id="perfilNombre" class="form-control" disabled>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" id="perfilEmail" class="form-control" disabled>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input type="pswd" id="perfilPassword" class="form-control" disabled>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Rol</label>
+            <input type="text" id="perfilRol" class="form-control" disabled>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Bio</label>
+            <textarea id="perfilBio" class="form-control" rows="3" disabled></textarea>
+          </div>
+
+          <button type="button" class="btn btn-primary w-100 mt-3" id="btnActualizarUsuario">
+            Actualizar usuario
+          </button>
+
+        </form>
+      </div>
+
+      <div id="pantallaUsuarios" class="d-none mt-4">
+        <h3>Gestión de Usuarios</h3>
+
+        <button id="btnCrearUsuario" class="btn btn-success mb-3">
+          Crear usuario
+        </button>
+
+        <div id="listaUsuarios"></div>
+        <div id="accionesUsuario"></div>
+      </div>
+
+      <div id="pantallaCreacionUsuarios" class="d-none mt-4">
+        <h3>Creacion de Usuarios</h3>
+
+        <form id="perfilForm" class="mt-3 p-3 border rounded bg-white">
+
+          <h4>Todos los campos son requeridos para crear el usuario</h4>
+
+          <div class="mb-3">
+            <label class="form-label">Nombre completo</label>
+            <input type="text" id="perfilNombre" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" id="perfilEmail" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input type="password" id="perfilPassword" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Rol</label>
+            <select id="perfilRol" class="form-control">
+              <option value="Admin">Admin</option>
+              <option value="Creador">Creador</option>
+              <option value="Viajero">Viajero</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Bio</label>
+            <textarea id="perfilBio" class="form-control" rows="3"></textarea>
+          </div>
+
+          <button type="button" class="btn btn-success w-100 mt-3" id="btnCrearUsuarioFinal">
+            Crear usuario
+          </button>
+
+        </form>
+
+
+        <button id="btnCrearUsuario" class="btn btn-success mb-3">
+          Crear usuario
+        </button>
+      </div>
+
+      <div id="pantallaCrearUsuario" class="d-none">
+
+        <form id="crearUsuarioForm" class="mt-3 p-3 border rounded bg-white">
+
+          <h4>Crear nuevo usuario</h4>
+
+          <div class="mb-3">
+            <label class="form-label">Nombre completo</label>
+            <input type="text" id="crearNombre" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" id="crearEmail" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input type="password" id="crearPassword" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Rol</label>
+            <select id="crearRol" class="form-control">
+              <option value="Admin">Admin</option>
+              <option value="Creador">Creador</option>
+              <option value="Viajero">Viajero</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Bio</label>
+            <textarea id="crearBio" class="form-control" rows="3"></textarea>
+          </div>
+
+          <button type="button" class="btn btn-success w-100 mt-3" id="btnCrearUsuarioEnviar">
+            Crear usuario
+          </button>
+
+        </form>
+
+      </div>
+
+      <div id="pantallaViajes" class="d-none mt-4">
+        <h3>Gestión de Viajes</h3>
+        <!-- Botón para crear viaje -->
+        <button id="btnCrearViaje" class="btn btn-success mb-3">
+          Crear viaje
+        </button>
+
+        <!-- Lista de viajes -->
+        <div id="listaViajes"></div>
+
+        <!-- Acciones del viaje seleccionado -->
+        <div id="accionesViaje" class="mt-4"></div>
+      </div>
+
+      <div id="pantallaCrearViaje" class="d-none mt-4">
+
+        <h3 id="tituloFormularioViaje">Crear nuevo viaje</h3>
+
+        <form id="crearViajeForm" class="mt-3 p-3 border rounded bg-white">
+
+          <div class="mb-3">
+            <label class="form-label">Nombre del viaje</label>
+            <input type="text" id="crearTitulo" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Destino</label>
+            <input type="text" id="crearDestino" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Fecha de inicio</label>
+            <input type="date" id="crearFechaInicio" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Fecha de fin</label>
+            <input type="date" id="crearFechaFin" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea id="crearDescripcion" class="form-control" rows="3"></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Máximo de participantes</label>
+            <input type="number" id="crearMaxParticipantes" class="form-control">
+          </div>
+
+          <button type="button" class="btn btn-success w-100 mt-3" id="btnCrearViajeEnviar">
+            Crear viaje
+          </button>
+
+        </form>
+
+      </div>
+
+      <div id="chatViaje" class="mt-4 d-none">
+        <h4>Chat del viaje</h4>
+
+        <div id="mensajesChat"
+          style="height: 250px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background: #f8f8f8;">
+        </div>
+
+        <div class="input-group mt-2">
+          <input type="text" id="inputMensaje" class="form-control" placeholder="Escribe un mensaje...">
+          <button class="btn btn-primary" id="btnEnviarMensaje">Enviar</button>
+        </div>
+      </div>
+
+      <div id="pantallaPeticions" class="d-none mt-4">
+        <h3>Peticiones de Promociones</h3>
+
+        <!-- LISTA DE PETICIONES -->
+        <div id="llistaPeticions" class="mt-3"></div>
+
+        <!-- FORMULARIO DE EDICIÓN -->
+        <div id="formulariPeticio" class="card p-4 mt-3" style="display:none; max-width: 500px;">
+          <h4 class="mb-3">Editar Petició</h4>
+
+          <div class="mb-3">
+            <label class="form-label">Usuario</label>
+            <input id="peticioUsuari" type="text" class="form-control" readonly>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Descripció</label>
+            <textarea id="peticioDescripcio" class="form-control" rows="3" readonly
+              placeholder="Introdueix la descripció"></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Estat</label>
+            <select id="peticioEstat" class="form-select">
+              <option value="Pendent">Pendent</option>
+              <option value="Aprovat">Aprovat</option>
+              <option value="Rebutjat">Rebutjat</option>
+            </select>
+          </div>
+
+          <button id="btnGuardarPeticio" class="btn btn-success w-100">
+            Guardar
+          </button>
+        </div>
+
+
+      </div>
+
+
+      <div id="pantallaViajesDisponibles" class="d-none mt-4">
+        <h3>Viajes Disponibles</h3>
+
+        <div id="listaViajesDisponibles"></div>
+
+        <div id="infoViajeSeleccionado" class="mt-4"></div>
+      </div>
+
+      <div id="pantallaMisViajes" class="d-none mt-4">
+        <h3>Mis Viajes</h3>
+
+        <div id="listaMisViajes"></div>
+
+        <!-- Información del viaje seleccionado -->
+        <div id="infoMiViaje" class="mt-4"></div>
+
+        <div id="chatMiViaje" class="mt-4"></div>
+
+      </div>
+
+      <div id="pantallaPeticionPromocion" class="d-none mt-4">
+        <h3>Solicitar Promoción</h3>
+
+        <div class="mt-3">
+          <label><strong>Mensaje de la petición:</strong></label>
+          <textarea id="mensajePeticion" class="form-control" rows="4" placeholder="Escribe tu petición..."></textarea>
+        </div>
+
+        <button class="btn btn-primary mt-3" onclick="enviarPeticionPromocion()">
+          Enviar petición
+        </button>
+      </div>
+
+
+    </div>
+
+
+
+    <script src="index.js"></script>
+
+</body>
+
+</html>

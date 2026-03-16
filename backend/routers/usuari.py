@@ -1,14 +1,22 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from backend.crud.usuari import create_usuari, get_usuari, delete_usuari, get_usuari_misatges, get_usuaris_viatges,get_usuari_viatges, get_usuaris, update_usuari
-from backend.schemas.schemas import UsuariSchema, UsuariResponse, UsuariViatgeResponse, UsuariPeticioResponse, UsuariMisatgeResponse
+from backend.crud.usuari import create_usuari, get_usuari, delete_usuari, get_usuari_viatges, get_usuaris, update_usuari, logUsuaris, register_usuari
+from backend.schemas.schemas import UsuariSchema, UsuariResponse, UsuariViewResponse, UsuariViatgeResponse, UsuariPeticioResponse, LoginSchema, RegisterSchema
 from backend.db.deps import get_db
 
 router = APIRouter(prefix="/usuaris", tags=["usuaris"])
 
+#Mostrar un usuario por id y sus viajes
+@router.get("/{usuari_id}/viatges", response_model=List[UsuariViatgeResponse])
+def read_usuari_viatges(usuari_id: int, db: Session = Depends(get_db)):
+    db_usuari = get_usuari_viatges(db, usuari_id)
+    if not db_usuari:
+        raise HTTPException(status_code=404, detail="Usuari not found")
+    return db_usuari
+
 #Mostrar un usuario por id
-@router.get("/{usuari_id}", response_model = UsuariResponse)
+@router.get("/{usuari_id}", response_model = UsuariViewResponse)
 def read_usuari(usuari_id: int, db: Session = Depends(get_db)):
   db_usuari = get_usuari(db, usuari_id)
   if not db_usuari:
@@ -16,30 +24,9 @@ def read_usuari(usuari_id: int, db: Session = Depends(get_db)):
   return db_usuari
 
 #Mostrar todos los usuarios
-@router.get("/", response_model=List[UsuariResponse])
+@router.get("/", response_model=List[UsuariViewResponse])
 def read_usuaris(db: Session = Depends(get_db)):
   return get_usuaris(db)
-
-#Mostrar todos los usuarios con sus viajes
-@router.get("/viatges", response_model=List[UsuariViatgeResponse])
-def read_usuaris_vitges(db: Session = Depends(get_db)):
-  return get_usuaris_viatges(db)
-
-#Mostrar un usuario por id y sus viajes
-@router.get("/{usuario_id}/viatges", response_model=UsuariViatgeResponse)
-def read_usuari_viatges(usuari_id: int, db: Session = Depends(get_db)):
-  db_usuari = get_usuari_viatges(db, usuari_id)
-  if not db_usuari:
-    raise HTTPException(status_code=404, detail="Usuari not found")
-  return db_usuari
-
-#Mostrar un usuario y sus mensajes
-@router.get("/{usuario_id}/misatge_xat", response_model=UsuariMisatgeResponse)
-def read_usuari_misatge(usuari_id: int, db: Session = Depends(get_db)):
-  db_usuari = get_usuari_misatges(db, usuari_id)
-  if not db_usuari:
-    raise HTTPException(status_code=404, detail="Usuari not found")
-  return db_usuari
 
 #Crear un nuevo usuario
 @router.post("/", response_model=UsuariResponse)
@@ -62,4 +49,19 @@ def delete_existing_usuari(usuari_id: int, db: Session = Depends(get_db)):
       raise HTTPException(status_code=404, detail="Usuari not found")
   return {"detail": "Usuari deleted successfully"}
 
+
+#Metodos forntend
+
+#Loging
+@router.post("/login", response_model=UsuariViewResponse)
+def log_usuaris(usuari: LoginSchema, db: Session = Depends(get_db)):    
+    db_usuari = logUsuaris(db, usuari.email, usuari.password)
+    if not db_usuari:
+        raise HTTPException(status_code=404, detail="Usuari o contrasenya incorrecto")
+    return db_usuari
+
+#Auto Registro de usuario
+@router.post("/register", response_model=UsuariSchema)
+def register_new_usuari(usuari:RegisterSchema, db: Session = Depends(get_db)):
+  return register_usuari(db, usuari)
 

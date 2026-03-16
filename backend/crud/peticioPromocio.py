@@ -9,7 +9,7 @@ def get_peticioPromocio(db: Session, peticio_id: int):
   return db.query(PeticioPromocio).filter(PeticioPromocio.id == peticio_id).first()
 
 def create_peticioPromocio(db: Session, peticio: PeticioPromocioSchema):
-  db_peticio = PeticioPromocio(usuariSolicitant = peticio.usuari_solicitant, misatge_peticio = peticio.misatge_peticio, estat = peticio.estat)
+  db_peticio = PeticioPromocio(usuari_solicitant = peticio.usuari_solicitant, misatge_peticio = peticio.misatge_peticio, estat = peticio.estat)
   db.add(db_peticio)
   db.commit()
   db.refresh(db_peticio)
