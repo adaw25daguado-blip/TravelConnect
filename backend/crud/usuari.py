@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session, joinedload
 from backend.models.usuari import Usuari
 from backend.models.participants import Participants
-from backend.schemas.schemas import UsuariResponse, UsuariSchema, RegisterSchema
+from backend.schemas.schemas import UsuariResponse, UsuariSchema, RegisterSchema, UsuariUpdateSchema
 from passlib.hash import bcrypt
 from passlib.context import CryptContext
 
@@ -37,18 +37,21 @@ def create_usuari(db: Session, usuari: UsuariSchema):
     db.refresh(db_usuari)
     return db_usuari
 
-def update_usuari(db: Session, usuari_id: int, usuari: UsuariSchema):
-  db_usuari = get_usuari(db, usuari_id)
-  if not db_usuari:
-    return None
-  db_usuari.email = usuari.email
-  db_usuari.hashed_password = hashearContrasenyas(usuari.hashed_password)
-  db_usuari.fullName = usuari.fullName
-  db_usuari.rol = usuari.rol
-  db_usuari.bio = usuari.bio
-  db.commit()
-  db.refresh(db_usuari)  
-  return db_usuari
+def update_usuari(db: Session, usuari_id: int, usuari: UsuariUpdateSchema):
+    db_usuari = db.query(Usuari).filter(Usuari.id == usuari_id).first()
+
+    if not db_usuari:
+        return None
+
+    update_data = usuari.dict(exclude_unset=True)
+
+    for key, value in update_data.items():
+        setattr(db_usuari, key, value)
+
+    db.commit()
+    db.refresh(db_usuari)
+    return db_usuari
+
 
 def delete_usuari(db: Session, usuari_id: int):
   db_usuari = get_usuari(db, usuari_id)

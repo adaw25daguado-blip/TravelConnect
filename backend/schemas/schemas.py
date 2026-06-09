@@ -37,10 +37,18 @@ class MisatgeXatSchema(BaseModel):
   contingut: str
   timestamp: datetime
 
+class UsuariUpdateSchema(BaseModel):
+    email: str | None = None
+    hashed_password: str | None = None
+    fullName: str | None = None
+    rol: str | None = None
+    bio: str | None = None
+
+
 # ------------------ Output ------------------
 
-  class Config:
-    from_attributes = True
+class Config:
+  from_attributes = True
 
 class UsuariResponse(UsuariSchema):
   id: int

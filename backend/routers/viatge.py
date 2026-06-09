@@ -21,7 +21,7 @@ def read_viatges(db: Session = Depends(get_db)):
   return get_viatges(db)
 
 #Mostrar los usuarios del viaje
-@router.get("/{vitge_id}/usuaris", response_model=List[ViatgeUsuariResponse])
+@router.get("/{viatge_id}/usuaris", response_model=List[ViatgeUsuariResponse])
 def read_viatge_usuaris(viatge_id: int, db: Session = Depends(get_db)):
   db_usuaris = get_viatge_usuaris(db, viatge_id)
   if not db_usuaris:
